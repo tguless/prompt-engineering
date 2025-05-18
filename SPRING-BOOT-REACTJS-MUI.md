@@ -196,10 +196,53 @@ To streamline front-end/back-end integration locally:
 
 - Use Lombok for JPA entities (`@Getter`, `@Setter`, `@Builder`, etc.) and entity mapping.
 - **Avoid DTO Classes**: Prefer Spring Data Projections (interface-based or class-based) for query results instead of custom DTOs to reduce boilerplate and leverage repository optimizations.
+- Always depend on the most recent stable versions of Spring Boot, Spring Data, OpenFeign, etc.  
+- Organize packages clearly: `com.yourcompany.app.domain`, `.service`, `.web`, etc.
 
+---
 
-## 6. Documentation & Context
+## 6. README & Project Plan
 
-- Ensure that **all** best-practice guidance, configuration details, and security recommendations provided in this prompt template are **copied into** your `README.md` under the appropriate sections.
-- This duplication ensures developers can easily pull in context and reminders of conventions **directly from the README** during development without needing to reference the original template.
+1. **Initial Sections**  
+   - Project overview & goals  
+   - Tech stack & architecture diagram  
+2. **Implementation Details**  
+   - DB user roles & Liquibase setup  
+   - Docker Compose instructions  
+   - React frontend scaffold instructions  
+   - How to run & test the Spring Boot app  
+   - **Configuration Files**: document settings in `application.yml` (including server.port, datasource, security).  
+   - Security configuration summary
+3. **README File Generation**  
+   - Auto-generate a `README.md` with:
+     ```markdown
+     # Project Name
+     
+     ## Prerequisites
+     - Docker & Docker Compose
+     - Node.js & npm
+     - Java 11+
+     
+     ## Setup & Run
+     ```bash
+     # Start PostgreSQL via Docker Compose
+     docker-compose up -d
 
+     # Start Spring Boot (default port from application.yml)
+     ./mvnw spring-boot:run
+
+     # Start React frontend (port 3000, proxy to backend)
+     npm start
+     ```
+     
+     ## Configuration
+     - Edit `application.yml` for server.port, datasource credentials, and JWT settings.
+     - Environment variables: `SERVER_PORT`, `JWT_SECRET`, etc.
+     ```
+4. **Project Plan**  
+   - Track tasks in a “To Do / In Progress / Done” list  
+   - Link to issue tracker or Kanban board
+
+---
+
+**Usage:** Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code. Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code. Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code.
