@@ -209,12 +209,38 @@ To streamline front-end/back-end integration locally:
    - Docker Compose instructions  
    - React frontend scaffold instructions  
    - How to run & test the Spring Boot app  
-   - **Configuration Files**: document settings in `application.yml` (including server.port, datasource, security).
+   - **Configuration Files**: document settings in `application.yml` (including server.port, datasource, security).  
    - Security configuration summary
-3. **Project Plan**  
+3. **README File Generation**  
+   - Auto-generate a `README.md` with:
+     ```markdown
+     # Project Name
+     
+     ## Prerequisites
+     - Docker & Docker Compose
+     - Node.js & npm
+     - Java 11+
+     
+     ## Setup & Run
+     ```bash
+     # Start PostgreSQL via Docker Compose
+     docker-compose up -d
+
+     # Start Spring Boot (default port from application.yml)
+     ./mvnw spring-boot:run
+
+     # Start React frontend (port 3000, proxy to backend)
+     npm start
+     ```
+     
+     ## Configuration
+     - Edit `application.yml` for server.port, datasource credentials, and JWT settings.
+     - Environment variables: `SERVER_PORT`, `JWT_SECRET`, etc.
+     ```
+4. **Project Plan**  
    - Track tasks in a “To Do / In Progress / Done” list  
    - Link to issue tracker or Kanban board
 
 ---
 
-**Usage:** Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code. Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code.
+**Usage:** Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code. Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code. Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code.
