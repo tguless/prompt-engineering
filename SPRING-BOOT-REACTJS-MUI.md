@@ -19,18 +19,37 @@ Use this template to kick off a ReactJS + Spring Boot cloud-native application. 
   - React (initialized with `npx create-react-app`)  
   - Material UI for UI components
   - Axios for HTTP calls
+  - **Local Proxy Setup**: configure `proxy` in `package.json` to forward API requests to Spring Boot during local development.
 - **Backend**  
   - Spring Boot (latest stable version)  
   - Spring Data JPA for persistence  
   - OpenFeign (modern version) for REST clients
   - Spring Security for authentication & authorization
+  - **Server Port**: externalize `server.port` in **`application.yml`** or via environment variable `SERVER_PORT` (default `8080`).
 - **Database**  
   - PostgreSQL (dockerized, dev port 5635)  
   - Liquibase for schema management
 
 ---
 
-## 2. Security Best Practices
+## 2. Local Development Proxy Setup
+
+To streamline front-end/back-end integration locally:
+1. **React Proxy**  
+   - In `package.json`:
+     ```json
+     {
+       "proxy": "http://localhost:${SERVER_PORT:-8080}"
+     }
+     ```
+   - Run back end on your configured port (default `8080` or as set).
+   - `npm start` will forward API calls (`/api/**`) automatically to Spring Boot.
+2. **CORS Support**  
+   - Ensure Spring Boot CORS config allows `http://localhost:3000` (CRA default).
+
+---
+
+## 3. Security Best Practices
 
 ### Frontend (React + Axios + JWT)
 - **Authentication Flow**:  
@@ -141,8 +160,7 @@ Use this template to kick off a ReactJS + Spring Boot cloud-native application. 
 
 ---
 
-## 3. Database & Migration
- Database & Migration
+## 4. Database & Migration
 
 1. **Schema Design**  
    - Define entities and relationships.  
@@ -173,7 +191,7 @@ Use this template to kick off a ReactJS + Spring Boot cloud-native application. 
 
 ---
 
-## 4. Code Conventions
+## 5. Code Conventions
 
 - Use Lombok for DTOs and JPA entities (`@Getter`, `@Setter`, `@Builder`, etc.).  
 - Always depend on the most recent stable versions of Spring Boot, Spring Data, OpenFeign, etc.  
@@ -181,7 +199,7 @@ Use this template to kick off a ReactJS + Spring Boot cloud-native application. 
 
 ---
 
-## 5. README & Project Plan
+## 6. README & Project Plan
 
 1. **Initial Sections**  
    - Project overview & goals  
@@ -191,6 +209,7 @@ Use this template to kick off a ReactJS + Spring Boot cloud-native application. 
    - Docker Compose instructions  
    - React frontend scaffold instructions  
    - How to run & test the Spring Boot app  
+   - **Configuration Files**: document settings in `application.yml` (including server.port, datasource, security).
    - Security configuration summary
 3. **Project Plan**  
    - Track tasks in a “To Do / In Progress / Done” list  
@@ -198,23 +217,4 @@ Use this template to kick off a ReactJS + Spring Boot cloud-native application. 
 
 ---
 
-## 6. Development Roadmap
-
-| Phase       | Tasks                                           |
-|-------------|-------------------------------------------------|
-| **Database**    | Finalize ERD, configure Liquibase & users     |
-| **Backend**     | Scaffold Spring Boot, implement entities & repos; configure Spring Security |
-| **Frontend**    | Scaffold CRA, integrate Material UI, configure Axios & security flows |
-| **Integration** | Define REST endpoints, OpenFeign & UI calls    |
-| **Testing**     | Unit/integration tests, security tests, end-to-end smoke tests |
-
----
-
-## 7. Optional (Marketing & SaaS)
-
-- **Homepage**: Landing page to promote your automation platform.  
-- **Multi-tenancy**: Ensure DB schema & Spring Security support multiple tenants.
-
----
-
-**Usage:** Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code.
+**Usage:** Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code. Copy this file into your repo, fill in each section, and share with your team or AI assistant to generate boilerplate code.
