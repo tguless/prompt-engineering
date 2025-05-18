@@ -19,7 +19,8 @@ Use this template to kick off a ReactJS + Spring Boot cloud-native application. 
   - React (initialized with `npx create-react-app`)  
   - Material UI for UI components
   - Axios for HTTP calls
-  - **Local Proxy Setup**: configure `proxy` in `package.json` to forward API requests to Spring Boot during local development.
+  - **State Management**: use Redux Toolkit for predictable global state or consider more modern libs like Zustand for lightweight state and React Query (TanStack Query) for server state/data fetching
+  - **Local Proxy Setup**: configure `proxy` in `package.json` to forward API requests to Spring Boot during local development.**: configure `proxy` in `package.json` to forward API requests to Spring Boot during local development.
 - **Backend**  
   - Spring Boot (latest stable version)  
   - Spring Data JPA for persistence  
