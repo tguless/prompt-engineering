@@ -13,7 +13,63 @@ Use this template to kick off a ReactJS + Spring Boot cloud-native application. 
 
 ---
 
+## Why Spring Boot & ReactJS?
+
+-   **Spring Boot (Backend):** A powerful, convention-over-configuration framework that accelerates Java application development.
+    -   **Rapid Development:** Auto-configuration, embedded servers, and starter dependencies minimize boilerplate, allowing developers to focus on business logic.
+    -   **Robust Ecosystem:** Seamlessly integrates with a vast ecosystem of tools for persistence (Spring Data), security (Spring Security), and more.
+    -   **Path to Cloud-Native:** With **Spring Cloud**, you get a mature toolkit for building resilient, distributed systems. It provides patterns like service discovery, configuration management, and circuit breakers, offering a clear path to a cloud-native architecture.
+
+-   **ReactJS (Frontend):** A declarative, component-based library for building interactive user interfaces.
+    -   **Component Reusability:** Build encapsulated components that manage their own state, making UIs easier to build, test, and maintain.
+    -   **Rich Ecosystem:** Access a vast library of tools and components, including Material UI for polished design systems and state management solutions.
+    -   **Performance Optimization & Native Compilation:** For performance-critical sections of your application, **React Native** allows you to compile parts of your web-based code into native code for iOS and Android, offering a path to high-performance mobile experiences without leaving the React ecosystem.
+
+---
+
+## Why PostgreSQL, Liquibase, & MinIO?
+
+-   **PostgreSQL:** A powerful, open-source relational database with enterprise-grade features.
+    -   **Reliability & Data Integrity:** ACID compliance, robust transaction support, and advanced data types ensure your data remains consistent and reliable.
+    -   **Scalability:** Supports both vertical scaling for larger machines and horizontal scaling through read replicas and partitioning.
+    -   **Advanced Features:** JSON/JSONB support, full-text search, geospatial capabilities, and extensibility through custom functions and types.
+    -   **Cloud Readiness:** All major cloud providers offer managed PostgreSQL services (AWS RDS, Azure Database for PostgreSQL, Google Cloud SQL).
+
+-   **Liquibase:** Database schema evolution and version control.
+    -   **Database-Agnostic:** While we use PostgreSQL in development and production, Liquibase's database-agnostic approach gives flexibility if database requirements change.
+    -   **Declarative Changes:** XML, YAML, JSON, or SQL formats to define changes, making them readable and trackable.
+    -   **Rollback Support:** Automated rollbacks if migrations fail, maintaining database integrity.
+    -   **CI/CD Integration:** Seamlessly integrates with CI/CD pipelines for automated database updates during deployment.
+
+-   **MinIO:** S3-compatible object storage for local development and beyond.
+    -   **API Consistency:** Develop locally against the same S3 API you'll use in production, eliminating environment-specific code.
+    -   **Performance:** High-performance object storage, even in containerized environments.
+    -   **Scalability Path:** Start with MinIO locally, then seamlessly transition to any S3-compatible cloud storage (AWS S3, Google Cloud Storage, etc.) in production.
+    -   **Kubernetes Native:** If your deployment evolves to Kubernetes, MinIO offers native integration.
+
+---
+
 ## 1. Tech Stack
+
+```mermaid
+flowchart TD
+    subgraph "User's Browser"
+        A["ReactJS Frontend (MUI)"]
+    end
+
+    subgraph "Cloud / Local Docker Environment"
+        B["Spring Boot Backend"]
+        C["PostgreSQL Database"]
+        D["MinIO (S3 Emulation)"]
+        E["Spring Cloud Services"]
+    end
+
+    A -- "REST API (Axios with JWT)" --> B
+    B -- "Spring Data JPA" --> C
+    B -- "S3 API" --> D
+    B -- "Discovery, Config" --> E
+    C -. "Liquibase Migrations" .-> C
+```
 
 - **Frontend**  
   - React (initialized with `npx create-react-app`)  
@@ -192,7 +248,51 @@ To streamline front-end/back-end integration locally:
 
 ---
 
-## 5. Code Conventions
+## 5. File Storage (S3 Emulation with MinIO)
+
+For applications requiring file storage, use MinIO for local development. MinIO provides an S3-compatible object storage server, allowing you to develop against the S3 API locally and deploy to any S3-compatible cloud storage (like AWS S3) in production without code changes.
+
+1.  **Local Dev Setup (Docker Compose)**
+    - Add MinIO to your `docker-compose.yml`:
+    ```yaml
+    # docker-compose.yml
+    services:
+      # ... your existing db service
+      minio:
+        image: minio/minio:latest
+        ports:
+          - "9000:9000"  # API port
+          - "9001:9001"  # Console port
+        environment:
+          MINIO_ROOT_USER: minioadmin
+          MINIO_ROOT_PASSWORD: minioadmin
+        command: server /data --console-address ":9001"
+    ```
+    - Access the MinIO console at `http://localhost:9001` to create buckets (e.g., `your-app-bucket`).
+
+2.  **Spring Boot Configuration**
+    - Add the AWS S3 SDK dependency to your `pom.xml`:
+    ```xml
+    <dependency>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>s3</artifactId>
+    </dependency>
+    ```
+    - Configure your `application.yml` to connect to the local MinIO instance:
+    ```yaml
+    aws:
+      s3:
+        endpoint: http://localhost:9000
+        access-key-id: minioadmin
+        secret-access-key: minioadmin
+        region: us-east-1 # S3 client requires a region
+        bucket-name: your-app-bucket
+    ```
+    - In your Spring service, you can now inject the `S3Client` and use it to upload/download files. For production, you would override these properties to point to your cloud S3 provider.
+
+---
+
+## 6. Code Conventions
 
 - Use Lombok for JPA entities (`@Getter`, `@Setter`, `@Builder`, etc.) and entity mapping.
 - **Avoid DTO Classes**: Prefer Spring Data Projections (interface-based or class-based) for query results instead of custom DTOs to reduce boilerplate and leverage repository optimizations.
@@ -201,7 +301,7 @@ To streamline front-end/back-end integration locally:
 
 ---
 
-## 6. README & Project Plan
+## 7. README & Project Plan
 
 1. **Initial Sections**  
    - Project overview & goals  
