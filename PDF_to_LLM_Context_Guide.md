@@ -124,60 +124,38 @@ This is where the magic happens. Using [BrowserTools MCP](https://github.com/Age
 2. Install the MCP server: `npx @agentdeskai/browser-tools-mcp@latest`
 3. Run the Node server: `npx @agentdeskai/browser-tools-server@latest`
 
-## Essential Tool Requirements
+## Why an MCP-Capable IDE is Essential
 
-This workflow demonstrates why a capable IDE is absolutely essential - it requires orchestrating multiple sophisticated tools:
+This workflow requires a sophisticated IDE because the LLM must orchestrate multiple tools and systems simultaneously:
 
-### Software Dependencies:
+### Required Software Dependencies:
 - **Python packages**: `pdf2image`, `Pillow` (which depend on Poppler)
 - **System utilities**: `pdftotext` (part of Poppler utilities)
 - **Node.js**: For running MCP and browser tools servers
 - **Chrome browser**: For displaying and capturing images
-
-### Browser Tools (via MCP):
 - **BrowserTools MCP Chrome extension**
-- **MCP server**: `@agentdeskai/browser-tools-mcp`
-- **Node server**: `@agentdeskai/browser-tools-server`
+- **MCP servers**: `@agentdeskai/browser-tools-mcp` and `@agentdeskai/browser-tools-server`
 
-## Why an MCP-Capable IDE is Essential
+### Critical IDE Capabilities:
+1. **Model Context Protocol (MCP)** - Interface with browser tools for screenshot capture
+2. **Terminal Integration** - Execute Python scripts, system commands, package installation
+3. **File Operations** - Create, read, edit files and organize directories
+4. **Task Management/Tracking** - Create, update, and track progress through systematic task lists (essential for autonomous multi-step processing)
+5. **Multi-tool Coordination** - Simultaneously manage 6+ different tool categories
+6. **Long-running Inference Support** - Maintain context and state across extended processing sessions
 
-This workflow requires an IDE with extensive capabilities because the LLM needs to orchestrate multiple tools and systems simultaneously. Here's what the IDE must support:
+### What the LLM Orchestrates:
+- **File Operations**: Creating scripts, reading text files, updating documentation
+- **Terminal Commands**: Running `pdf2llm.py`, opening browser windows, managing processes
+- **Browser Tools**: Screenshot capture, visual analysis, browser control
+- **Text Processing**: PDF extraction, content analysis, cross-referencing
+- **Task Tracking**: Creating systematic task lists (e.g., "1 of 37 pages"), marking progress, maintaining workflow state
+- **Document Generation**: Markdown creation, mermaid diagrams, structured output
+- **State Management**: Tracking progress through dozens of pages with real-time adaptation
 
-### Core Requirements:
-1. **Model Context Protocol (MCP)** - For browser tools integration
-2. **Terminal/Command Line Access** - For running Python scripts and system commands
-3. **File System Operations** - For creating, reading, and editing files
-4. **Multi-tool Orchestration** - For coordinating between different systems
+**Why Manual Processing Fails**: The LLM needs to dynamically coordinate these 6+ tool categories while maintaining state across potentially hundreds of operations. Only an integrated IDE environment can provide this level of automation and tool coordination.
 
-### Tools the LLM Uses Throughout the Process:
-
-#### File Operations:
-- **File Creation**: Writing Python scripts, markdown documents, configuration files
-- **File Reading**: Analyzing extracted text files, checking script outputs
-- **File Editing**: Updating documentation incrementally as pages are processed
-- **Directory Operations**: Creating output folders, organizing extracted images
-
-#### Terminal Commands:
-- **Python Script Execution**: Running `pdf2llm.py` to extract images and text
-- **System Commands**: Using `open` (macOS) or equivalent to launch browser with images
-- **Package Installation**: Installing dependencies like `pdf2image`, `poppler-utils`
-- **Process Management**: Starting and monitoring MCP servers
-
-#### Browser Tools (via MCP):
-- **Screenshot Capture**: `takeScreenshot` to capture each page visually
-- **Browser Control**: Opening specific files in the browser
-- **Visual Analysis**: Processing the captured screenshots for content analysis
-
-#### Text Processing:
-- **PDF Text Extraction**: Using `pdftotext` for machine-readable content
-- **Text Analysis**: Processing extracted text to identify sections and content
-- **Cross-referencing**: Matching visual elements with corresponding text
-
-Compatible IDEs include:
-- **Cursor** (Full MCP support, excellent terminal integration)
-- **Zed** (MCP capabilities, modern terminal)
-- **Claude Desktop** (with MCP configuration)
-- **Any IDE with Anthropic's MCP integration**
+**Compatible IDEs**: Cursor, Zed, Claude Desktop (with MCP), or any IDE with Anthropic's MCP integration.
 
 ### Running the Python Script from Your IDE
 
@@ -332,15 +310,6 @@ As demonstrated in the Cursor IDE screenshot, this workflow showcases the full p
    - Generating mermaid diagrams based on visual analysis
    - Formatting tables and lists from PDF content
 
-### Why This Requires a Full IDE:
-
-The LLM simultaneously orchestrates:
-- **6+ different tool categories** (file ops, terminal, browser, text processing, etc.)
-- **Multiple concurrent processes** (MCP servers, browser instances, file operations)
-- **Complex state management** (tracking progress through dozens of pages)
-- **Real-time adaptation** (adjusting approach based on content discovery)
-
-This level of automation and tool coordination is only possible within a sophisticated IDE environment that provides integrated access to all these capabilities.
 
 ## Benefits of This Approach
 
